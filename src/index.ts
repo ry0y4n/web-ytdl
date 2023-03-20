@@ -9,8 +9,8 @@ app.get("/download", async (req, res, next) => {
   const url = req.query.url;
   if (!url || typeof url != "string") return next();
   const info = await ytdl.getInfo(url);
-  const audioStream = ytdl.downloadFromInfo(info, { quality: 'highestaudio' });
-  const videoStream = ytdl.downloadFromInfo(info, { quality: 'highestvideo' });
+  const audioStream = ytdl.downloadFromInfo(info, { quality: 'lowestaudio' });
+  const videoStream = ytdl.downloadFromInfo(info, { quality: 'lowestvideo' });
   //映像と音声を結合するエンコード処理
   const ffmpeg = spawn("ffmpeg", [
       '-loglevel', '8', '-hide_banner',
