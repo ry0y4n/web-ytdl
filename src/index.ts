@@ -29,16 +29,16 @@ app.get("/download", async (req, res, next) => {
 			'inherit', 'inherit', 'inherit',
 			'pipe', 'pipe', 'pipe'
 		]
-	}) as any
+	}) as any;
 	//用意したパイプに流し込む
 	audioStream.pipe(ffmpeg.stdio[3]).on('error', (err: any) => console.log(err));
 	videoStream.pipe(ffmpeg.stdio[4]).on('error', (err: any) => console.log(err));
 	//エンコード結果をストリーム化
-	const resultStream = ffmpeg.stdio[5].pipe(new stream.PassThrough({ highWaterMark: 1920 * 1080 }))
+	const resultStream = ffmpeg.stdio[5].pipe(new stream.PassThrough({ highWaterMark: 1920 * 1080 }));
 	res.contentType("video/mp4");
 	res.attachment(`${info.videoDetails.title}.mp4`);
-	resultStream.pipe(res, { end: true })
-	res.on("close", () => ffmpeg.kill())
+	resultStream.pipe(res, { end: true });
+	res.on("close", () => ffmpeg.kill());
 });
 
 app.use(express.static(path.resolve(__dirname, "..", "public")));
