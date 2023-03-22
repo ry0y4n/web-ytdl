@@ -3,6 +3,6 @@ const downloadButton = document.getElementById('download')
 
 downloadButton.addEventListener('click', () => {
   const url = urlInput.value
-  const downloadUrl = `https://web-ytdl.iamtakagi.net/download?url=${url}`
+  const downloadUrl = `https://youtube-video-download-api-211d.onrender.com/download?url=${url}`
   window.open(downloadUrl)
 })
