@@ -31,8 +31,8 @@ app.get("/download", async (req, res, next) => {
 		]
 	}) as any
 	//用意したパイプに流し込む
-	audioStream.pipe(ffmpeg.stdio[3]);
-	videoStream.pipe(ffmpeg.stdio[4]);
+	audioStream.pipe(ffmpeg.stdio[3]).on('error', (err: any) => console.log(err));
+	videoStream.pipe(ffmpeg.stdio[4]).on('error', (err: any) => console.log(err));
 	//エンコード結果をストリーム化
 	const resultStream = ffmpeg.stdio[5].pipe(new stream.PassThrough({ highWaterMark: 1920 * 1080 }))
 	res.contentType("video/mp4");
