@@ -6,6 +6,8 @@ import stream from "stream";
 const app = express();
 
 app.get("/download", async (req, res, next) => {
+	const startTime = req.query.start_time;
+    const duration = req.query.duration;
 	const url = req.query.url;
 	if (!url || typeof url != "string") return next();
 	const info = await ytdl.getInfo(url);
@@ -17,7 +19,9 @@ app.get("/download", async (req, res, next) => {
 		'-i', 'pipe:3', '-i', 'pipe:4',
 		'-map', '0:a', '-map', '1:v',
 		'-c', 'copy',
-		'-f', 'matroska', 'pipe:5'
+		'-f', 'matroska',
+		'-ss', `${startTime}`, '-t', `${duration}`,
+		'pipe:5'
 	], {
 		// Windowsの場合、ポップアップが出ないようにする
 		windowsHide: true,
